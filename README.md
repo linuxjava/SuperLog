@@ -1,89 +1,107 @@
-# SuperAdapter
-超强的Adapter
+# SuperLog
 
+项目源自于![xLog](https://github.com/elvishew/xLog)，工作的项目也使用了该项目作为日志输出模块，格式化输出很好很方便，但是在实际
+的使用中也遇到了一些无法满足的需求和bug，因此SuperLog是基于xLog的二次开发，内容如下：
 项目特点
-* 支持RecyclerView单类型和多类型ItemView；
-* RecyclerView支持快捷的添加HeaderView和FooterView；
-* RecyclerView支持快捷的添加LoadMoreView；
-* 支持ListView单类型和多类型ItemView；
-* 支持GridView单类型和多类型ItemView；
-
-##  APK下载
-[Download](https://github.com/linuxjava/SuperAdapter/raw/master/apk/app-debug.apk)
+* 原有xlog中的Logger和xLog类太臃肿，很多方法其实并没什么作用，对此进行优化；
+* 修复xlog无法支持自定义tag；
+* 修复文件写日志的bug；
 
 ## 使用
 ### 添加依赖
 ```xml
-implementation 'xiao.free.superadapter:SuperAdapterLib:0.2'
+implementation 'xiao.free.slog:SuperLog:0.1'
+implementation 'com.google.code.gson:gson:2.8.0'
 ```
-### 简单使用
-创建CommonAdapter即可
+
+### 配置参考
+配置可以参考SuperLog中的设置
 ```xml
-mCommonAdapter = new CommonAdapter<String>(this, R.layout.item_single_text) {
-    @Override
-    protected void convert(ViewHolder holder, String o, int position) {
-        holder.setText(R.id.text_content, o);
-    }
-};
+LogConfiguration androidLoggerConfig = new LogConfiguration.Builder()
+                    .tag(TAG)                   // Specify TAG
+                    .t()                                                // Enable thread info, disabled by default
+                    .st(3)                                              // Enable stack trace info with depth 2, disabled by default
+                    .b()                                                // Enable border, disabled by default
+                    // .jsonFormatter(new MyJsonFormatter())               // Default: DefaultJsonFormatter
+                    // .xmlFormatter(new MyXmlFormatter())                 // Default: DefaultXmlFormatter
+                    // .throwableFormatter(new MyThrowableFormatter())     // Default: DefaultThrowableFormatter
+                    // .threadFormatter(new MyThreadFormatter())           // Default: DefaultThreadFormatter
+                    // .stackTraceFormatter(new MyStackTraceFormatter())   // Default: DefaultStackTraceFormatter
+                    // .borderFormatter(new MyBoardFormatter())            // Default: DefaultBorderFormatter
+                    // .addObjectFormatter(AnyClass.class,                 // Add formatter for specific class of object
+                    //     new AnyClassObjectFormatter())                  // Use Object.toString() by default
+                    // .addInterceptor(new WhitelistTagsFilterInterceptor( // Add whitelist tags filter
+                    //     "whitelist1", "whitelist2", "whitelist3"))
+                    // .addInterceptor(new MyInterceptor())                // Add a log interceptor
+                    .build();
+
+            androidLogger = new Logger(androidLoggerConfig, new AndroidPrinter());
+
+
+            LogConfiguration fileLoggerConfig = new LogConfiguration.Builder()
+                    .tag(TAG).build();
+            Printer filePrinter = new FilePrinter                      // Printer that print the log to the file system
+                    .Builder(new File(Environment.getExternalStorageDirectory(), "CRGTXlog").getPath())       // Specify the path to save log file
+                    .fileNameGenerator(new DateFileNameGenerator())        // Default: ChangelessFileNameGenerator("log")
+                    //.backupStrategy(new MyBackupStrategy())             // Default: FileSizeBackupStrategy(1024 * 1024)
+                    .flattener(new ClassicFlattener())                  // Default: DefaultFlattener
+                    .setFileLogRetentionPeriod(LOG_RETENTION_PERIOD)
+                    .build();
+            fileLogger = new Logger(fileLoggerConfig, filePrinter);
 ```
-### 添加HeaderView和FooterView
+### 方法
+* Logcat格式化输出：
 ```xml
-//快捷的添加header和footer
-HeaderAndFooterWrapper<String> headerAndFooterWrapper = new HeaderAndFooterWrapper<>(mCommonAdapter);
-headerAndFooterWrapper.addHeaderView(R.layout.item_header);
-headerAndFooterWrapper.addFootView(R.layout.item_footer);
+/**
+ * 格式化输出JavaBean
+ *
+ * @param object
+ */
+public static void d(Object object)
 
-mRecyclerView.setAdapter(headerAndFooterWrapper);
+/**
+ * 格式化输出数组类型
+ *
+ * @param array
+ */
+public static void d(Object[] array)
+
+/**
+ * 格式化输出Throwable
+ *
+ * @param tr
+ */
+public static void d(Throwable tr)
+
+/**
+* 格式化输出msg
+*
+* @param msg
+*/
+public static void d(String msg)
+
+/**
+* 格式化输出json
+*
+* @param json
+*/
+public static void json(String json)
+
+/**
+ * 使用系统的Log输出(非格式化输出)
+ *
+ * @param msg
+ */
+public static void print(String msg)    
 ```
-使用HeaderAndFooterWrapper封装mCommonAdapter，然后通过HeaderAndFooterWrapper添加HeaderView和FooterView
+以上所有方法都包含另一版本，支持自定义TAG输出。
 
-![image](https://github.com/linuxjava/SuperAdapter/raw/master/screenshot/2.gif)
+![image](https://github.com/elvishew/XLog/blob/master/images/classic_log.png)
 
-### 多类型ItemView
+* 写日志文件：
 ```xml
-public static class SendTextHolder implements ItemViewDelegate<ChatMessage> {
+public static void writeFile(String msg)
 
-    @Override
-    public int getItemViewLayoutId() {
-        return R.layout.item_chat_send_msg;
-    }
-
-    @Override
-    public boolean isForViewType(ChatMessage item, int position) {
-        return item.getItemType() == ChatMessage.ITEM_TYPE_SEND_TEXT;
-    }
-
-    @Override
-    public void convert(ViewHolder holder, ChatMessage chatMessage, int position) {
-
-    }
-}
-
-public static class RecvTextHolder implements ItemViewDelegate<ChatMessage> {
-
-    @Override
-    public int getItemViewLayoutId() {
-        return R.layout.item_chat_recv_msg;
-    }
-
-    @Override
-    public boolean isForViewType(ChatMessage item, int position) {
-        return item.getItemType() == ChatMessage.ITEM_TYPE_RECV_TEXT;
-    }
-
-    @Override
-    public void convert(ViewHolder holder, ChatMessage chatMessage, int position) {
-
-    }
-}
+public static void writeFile(Object object)
 ```
-每一种类型对应创建一个ItemViewDelegate
-![image](https://github.com/linuxjava/SuperAdapter/raw/master/screenshot/1.png)
-
-## 感谢
-项目源码来源[https://github.com/hongyangAndroid/baseAdapter](https://github.com/hongyangAndroid/baseAdapter)
-，在此基础是对MultiItemTypeAdapter和HeaderAndFooterWrapper进行了优化。
-
-
-
-
+以上所有方法都包含另一版本，支持自定义TAG输出。
