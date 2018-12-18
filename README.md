@@ -1,6 +1,6 @@
 # SuperLog
 
-项目源自于![xLog](https://github.com/elvishew/xLog)，工作的项目也使用了该项目作为日志输出模块，格式化输出很好很方便，但是在实际
+项目源自于[xLog](https://github.com/elvishew/xLog)，工作项目使用了该项目作为日志输出模块，格式化输出很好很方便，但是在实际
 的使用中也遇到了一些无法满足的需求和bug，因此SuperLog是基于xLog的二次开发，内容如下：
 项目特点
 * 原有xlog中的Logger和xLog类太臃肿，很多方法其实并没什么作用，对此进行优化；
