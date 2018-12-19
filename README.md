@@ -12,7 +12,7 @@
 ## 使用
 ### 添加依赖
 ```xml
-implementation 'xiao.free.slog:SuperLog:0.1'
+implementation 'xiao.free.superlog:0.1'
 implementation 'com.google.code.gson:gson:2.8.0'
 ```
 

@@ -1,13 +1,13 @@
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
-def siteUrl = "https://github.com/linuxjava/SuperAdapter"
-def gitUrl = "https://github.com/linuxjava/SuperAdapter.git"
-def desc = "SuperAdapter for Android"//添加项目描述
-def repoStr = "SuperAdapter"//JCenter上仓储名
+def siteUrl = "https://github.com/linuxjava/SuperLog"
+def gitUrl = "https://github.com/linuxjava/SuperLog.git"
+def desc = "SuperLog for Android"//添加项目描述
+def repoStr = "SuperLog"//JCenter上仓储名
 
-group = 'xiao.free.superadapter'// library name
-version = '0.2'// version
+group = 'xiao.free.superlog'// library name
+version = '0.1'// version
 
 
 Properties properties = new Properties()

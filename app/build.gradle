@@ -23,4 +23,5 @@ dependencies {
     implementation appDependence.appcompat
     implementation appDependence.constraintLayout
     implementation project(':SuperLoglib')
+    //implementation 'com.github.linuxjava:SuperLog:Tag'
 }

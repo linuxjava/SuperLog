@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import free.xiao.slog.SuperLog;
+import free.xiao.superlog.SuperLog;
 
 public class MainActivity extends AppCompatActivity {
 
