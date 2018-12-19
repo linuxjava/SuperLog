@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
-//group='xiao.free.superlog'
+group='com.github.linuxjava'
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
