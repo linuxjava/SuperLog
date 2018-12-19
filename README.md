@@ -23,7 +23,7 @@ allprojects {
  Add the dependency
 ```xml
 dependencies {
-    implementation 'com.github.linuxjava:SuperLog:1.0'
+    implementation 'com.github.linuxjava:SuperLog:2.0'
 }
 ```
 
