@@ -63,7 +63,7 @@ public class SuperLog {
             LogConfiguration fileLoggerConfig = new LogConfiguration.Builder()
                     .tag(TAG).build();
             Printer filePrinter = new FilePrinter                      // Printer that print the log to the file system
-                    .Builder(new File(Environment.getExternalStorageDirectory(), "CRGTXlog").getPath())       // Specify the path to save log file
+                    .Builder(new File(Environment.getExternalStorageDirectory(), "Superplog").getPath())       // Specify the path to save log file
                     .fileNameGenerator(new DateFileNameGenerator())        // Default: ChangelessFileNameGenerator("log")
                     //.backupStrategy(new MyBackupStrategy())             // Default: FileSizeBackupStrategy(1024 * 1024)
                     .flattener(new ClassicFlattener())                  // Default: DefaultFlattener
