@@ -11,9 +11,20 @@
 
 ## 使用
 ### 添加依赖
+Add it in your root build.gradle at the end of repositories:
 ```xml
-implementation 'xiao.free.superlog:0.1'
-implementation 'com.google.code.gson:gson:2.8.0'
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+ Add the dependency
+```xml
+dependencies {
+    implementation 'com.github.linuxjava:SuperLog:1.0'
+}
 ```
 
 ### 配置参考
