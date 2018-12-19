@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.linuxjava'// huangxiaoguo1代表你github名字
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
