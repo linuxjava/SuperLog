@@ -5,6 +5,7 @@ group='com.github.linuxjava'
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
+    buildToolsVersion "28.0.3"
     defaultConfig {
         minSdkVersion rootProject.ext.androidMinSdkVersion
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
