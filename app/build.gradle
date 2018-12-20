@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
-    buildToolsVersion rootProject.ext.androidBuildToolsVersion
+    //buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
     defaultConfig {
         applicationId "free.xiao.log.demo"
@@ -21,9 +21,9 @@ android {
 
 dependencies {
     def appDependence = rootProject.ext.app
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile appDependence.appcompat
-    compile appDependence.constraintLayout
-    compile project(':SuperLoglib')
-    //compile 'com.github.linuxjava:SuperLog:Tag'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation appDependence.appcompat
+    implementation appDependence.constraintLayout
+    //implementation project(':SuperLoglib')
+    implementation 'com.github.linuxjava:SuperLog:2.0'
 }
